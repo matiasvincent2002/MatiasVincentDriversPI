@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getDrivers } from '../redux/actions';
+import { getDrivers, getTeams } from '../redux/actions';
 import NavBar from '../components/navbar/NavBar';
 import SearchBar from '../components/searchbar/SearchBar';
 import Cards from '../components/cards/Cards';
 import { useLocation } from 'react-router-dom';
 import { Link } from 'react-router-dom';
-import Filters from '../components/filter/filters';
+
+import Style from '../utils/HomePage.module.css';
 
 const HomePage = () => {
   const dispatch = useDispatch();
@@ -20,6 +21,7 @@ const HomePage = () => {
 
   useEffect(() => {
     dispatch(getDrivers());
+    dispatch(getTeams());
   }, [dispatch]);
 
   useEffect(() => {
@@ -28,15 +30,13 @@ const HomePage = () => {
 
   return (
     <div>
-      <header>
-        <h1>Bienvenido a la Página Principal</h1>
+      <header className={Style.header}>
+        
       </header>
 
-      <div>
+      <div className={Style.barra}>
         <NavBar />
-        <Link to={`/form`}>
-          <button>Create Drivers</button>
-        </Link>
+       
       </div>
 
       <div>
@@ -44,6 +44,7 @@ const HomePage = () => {
       </div>
 
       <div>
+        {/* Asegúrate de pasar currentPage y totalPages como props a Cards */}
         <Cards drivers={drivers} currentPage={currentPage} totalPages={totalPages} setCurrentPage={setCurrentPage} />
       </div>
     </div>

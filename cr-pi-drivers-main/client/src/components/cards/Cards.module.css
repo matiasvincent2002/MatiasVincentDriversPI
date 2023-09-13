@@ -15,8 +15,15 @@ list-style: none;
 }
 .container{
     display: flex;
-    justify-content: space-evenly;
+    justify-content: space-around;
     flex-wrap: wrap;
-    
+  
 
+}
+.pagination{
+
+    border: 1px solid #333;
+    width: 100%;
+    margin: 0 auto;
+    
 }

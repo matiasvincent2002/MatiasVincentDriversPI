@@ -66,7 +66,14 @@ export const ordenByDateAsc = () => {
 export const ordenByDateDesc = () => {
   return { type: 'SORT_ORDEN_BY_DATE_DESC' };
 };
+//filtros papa
+export const filterByApiDb = (param) => {
+  return { type: 'FILTER_BY_APIDB', payload: param };
+};
 
+export const filterByTeam = (team) => {
+  return { type: 'FILTER_BY_TEAM', payload: team };
+};
 // Acción para establecer la página actual
 export const setCurrentPage = (page) => {
   return {
@@ -75,20 +82,6 @@ export const setCurrentPage = (page) => {
   };
 };
 
-// Acciones para filtrar conductores por equipo y origen
-export const filterByTeam = (team) => {
-  return {
-    type: 'FILTER_BY_TEAM',
-    payload: team,
-  };
-};
-
-export const filterByOrigin = (origin) => {
-  return {
-    type: 'FILTER_BY_ORIGIN',
-    payload: origin,
-  };
-};
 
 // Acción para crear un nuevo conductor
 export const createDriver = (formData) => {

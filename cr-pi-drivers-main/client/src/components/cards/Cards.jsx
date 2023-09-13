@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import Card from '../card/Card';
-
+import Style from '../cards/Cards.module.css'
 const Cards = ({ drivers }) => {
   const itemsPerPage = 10;
   const [currentPage, setCurrentPage] = useState(1);
@@ -8,7 +8,7 @@ const Cards = ({ drivers }) => {
 
   const startIndex = (currentPage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
-  const currentDrivers = Array.isArray(drivers) ? drivers.slice(startIndex, endIndex) : [];
+  const currentDrivers = Array.isArray(drivers)  ? drivers.slice(startIndex, endIndex) : [];
 
   const totalPages = Math.ceil(drivers.length / itemsPerPage);
 
@@ -57,17 +57,7 @@ const Cards = ({ drivers }) => {
 
   return (
     <div>
-      {currentDrivers.map((driver) => (
-        <Card
-          key={driver.id}
-          id={driver.id}
-          name={driver.name}
-          image={driver.image.url}
-          dob={driver.dob}
-          teams={driver.teams}
-        />
-      ))}
-      <div className="pagination">
+    <div className={Style.pagination}>
         <button onClick={prevPage} disabled={currentPage === 1}>
           Prev
         </button>
@@ -88,6 +78,22 @@ const Cards = ({ drivers }) => {
           Next
         </button>
       </div>
+
+    <div className={Style.container}>
+
+
+      {currentDrivers.map((driver) => (
+        <Card
+          key={driver.id}
+          id={driver.id}
+          name={driver.name}
+          image={driver.image.url}
+          dob={driver.dob}
+          teams={driver.teams}
+        />
+      ))}
+      
+    </div>
     </div>
   );
 };

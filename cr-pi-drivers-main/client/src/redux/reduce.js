@@ -1,11 +1,13 @@
 const initialState = {
   drivers: [],
+  copyDrivers: [],
   teams: [],
   currentPage: 1,
   itemsPerPage: 9,
   sortOrder: 'asc',
   selectedTeam: null,
   selectedOrigin: null,
+  
 };
 
 const reducer = (state = initialState, action) => {
@@ -14,6 +16,7 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         drivers: action.payload,
+        copyDrivers : action.payload,
       };
     case 'GET_TEAMS_SUCCESS':
       return {
@@ -64,28 +67,44 @@ const reducer = (state = initialState, action) => {
         drivers: [...state.drivers.sort((a, b) => new Date(b.dob) - new Date(a.dob))],
         sortOrder: 'desc',
       };
-    case 'FILTER_DRIVERS_BY_TEAM':
-      return {
-        ...state,
-        filterTeam: action.payload,
-      };
-    case 'FILTER_DRIVERS_BY_ORIGIN':
-      return {
-        ...state,
-        filterOrigin: action.payload,
-      };
+    case 'FILTER_BY_APIDB':
+        
+      
+        if(action.payload === 'db'){
+          const filtered = state.copyDrivers.filter((driver)=>{
+          if(isNaN(driver.id)){
+            return driver;
+          }
+        })
+        return {...state, drivers: filtered}
+      
+      }else if(action.payload === 'api'){
+        const filtered = state.copyDrivers.filter((driver)=>{
+          if(Number(driver.id)){
+            return driver;
+          }
+        })
+        return{...state, drivers: filtered}
+        
+      }
+      else{
+        return{
+          ...state,
+          drivers: state.copyDrivers
+        }
+      }
+          
     case 'FILTER_BY_TEAM':
-      return {
-        ...state,
-        selectedTeam: action.payload,
-        currentPage: 1,
-      };
-    case 'FILTER_BY_ORIGIN':
-      return {
-        ...state,
-        selectedOrigin: action.payload,
-        currentPage: 1,
-      };
+      console.log(state.drivers)
+      const filtered = state.copyDrivers.filter((driver)=>
+        driver.teams? driver.teams?.includes(action.payload):driver.Teams?.find((team)=>team.name.toLowerCase() === action.payload.toLowerCase()))
+       
+        return{...state,
+          drivers: filtered
+        }
+     
+
+      
     default:
       return state;
   }
